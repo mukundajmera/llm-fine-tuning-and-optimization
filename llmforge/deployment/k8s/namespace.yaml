@@ -1,0 +1,8 @@
+# LLMForge Kubernetes Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: llmforge
+  labels:
+    app: llmforge
+    environment: production

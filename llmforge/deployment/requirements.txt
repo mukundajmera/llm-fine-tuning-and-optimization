@@ -1,0 +1,22 @@
+# LLMForge Deployment Requirements
+# For vLLM inference server
+
+# vLLM inference engine
+vllm==0.6.3.post1
+
+# FastAPI server
+fastapi==0.115.6
+uvicorn==0.32.1
+python-multipart==0.0.17
+
+# Monitoring
+prometheus-client==0.21.1
+
+# GCP integration
+google-cloud-storage==2.18.2
+
+# Utilities
+pydantic==2.10.3
+pydantic-settings==2.6.1
+python-dotenv==1.0.1
+httpx==0.28.1

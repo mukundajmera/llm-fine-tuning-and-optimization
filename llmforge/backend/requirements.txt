@@ -1,0 +1,32 @@
+# LLMForge Backend Requirements
+# FastAPI backend for job orchestration
+
+# Web framework
+fastapi==0.115.6
+uvicorn==0.32.1
+python-multipart==0.0.17
+
+# Database
+sqlalchemy==2.0.36
+psycopg2-binary==2.9.10
+alembic==1.14.0
+
+# Data validation
+pydantic==2.10.3
+pydantic-settings==2.6.1
+
+# GCP integration
+google-cloud-storage==2.18.2
+google-cloud-aiplatform==1.71.1
+
+# MLflow client
+mlflow==2.18.2
+
+# HTTP client
+httpx==0.28.1
+
+# Utilities
+python-dotenv==1.0.1
+python-jose==3.3.0
+passlib==1.7.4
+bcrypt==4.2.1
