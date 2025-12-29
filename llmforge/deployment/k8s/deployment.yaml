@@ -1,0 +1,118 @@
+# LLMForge vLLM Deployment
+# Deploys vLLM inference server on GKE with GPU support
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vllm-llama-3-1-8b
+  namespace: llmforge
+  labels:
+    app: vllm-inference
+    model: llama-3-1-8b
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: vllm-inference
+      model: llama-3-1-8b
+  template:
+    metadata:
+      labels:
+        app: vllm-inference
+        model: llama-3-1-8b
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
+    spec:
+      nodeSelector:
+        # Use L4 GPUs (cost-effective) or A100 (high-throughput)
+        cloud.google.com/gke-accelerator: nvidia-l4
+      
+      tolerations:
+        - key: nvidia.com/gpu
+          operator: Exists
+          effect: NoSchedule
+      
+      containers:
+        - name: vllm-server
+          image: gcr.io/YOUR_PROJECT/llmforge-vllm:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          
+          env:
+            - name: MODEL_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: vllm-config
+                  key: model_path
+            - name: GPU_MEMORY_UTILIZATION
+              valueFrom:
+                configMapKeyRef:
+                  name: vllm-config
+                  key: gpu_memory_utilization
+            - name: MAX_MODEL_LEN
+              valueFrom:
+                configMapKeyRef:
+                  name: vllm-config
+                  key: max_model_len
+            - name: TENSOR_PARALLEL_SIZE
+              valueFrom:
+                configMapKeyRef:
+                  name: vllm-config
+                  key: tensor_parallel_size
+          
+          resources:
+            requests:
+              nvidia.com/gpu: 1
+              memory: "24Gi"
+              cpu: "8"
+            limits:
+              nvidia.com/gpu: 1
+              memory: "24Gi"
+              cpu: "8"
+          
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 180
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+          
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 180
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          
+          volumeMounts:
+            - name: model-cache
+              mountPath: /root/.cache/huggingface
+      
+      volumes:
+        - name: model-cache
+          emptyDir:
+            sizeLimit: 50Gi
+      
+      terminationGracePeriodSeconds: 60
+
+---
+# ConfigMap for vLLM configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vllm-config
+  namespace: llmforge
+data:
+  model_path: "gs://your-bucket/models/llama-3.1-8b-finetuned"
+  gpu_memory_utilization: "0.90"
+  max_model_len: "8192"
+  tensor_parallel_size: "1"

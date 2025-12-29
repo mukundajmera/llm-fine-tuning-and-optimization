@@ -1,0 +1,36 @@
+# LLMForge Ingress
+# Configures ingress for external access with SSL termination
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vllm-ingress
+  namespace: llmforge
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: "llmforge-ip"
+    networking.gke.io/managed-certificates: "llmforge-cert"
+    kubernetes.io/ingress.allow-http: "false"
+spec:
+  rules:
+    - host: api.llmforge.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: vllm-service
+                port:
+                  number: 80
+
+---
+# Managed Certificate for SSL
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: llmforge-cert
+  namespace: llmforge
+spec:
+  domains:
+    - api.llmforge.example.com

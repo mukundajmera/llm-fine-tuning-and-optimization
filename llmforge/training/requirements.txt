@@ -1,0 +1,44 @@
+# LLMForge Training Requirements
+# Verified compatible versions (Dec 2025)
+# For use with CUDA 12.1+ on GCP A100 GPUs
+
+# Core PyTorch (CUDA 12.1)
+torch==2.5.1
+
+# Hugging Face Ecosystem
+transformers==4.46.3
+peft==0.13.2
+trl==0.11.4
+datasets==3.2.0
+accelerate==1.1.1
+tokenizers==0.21.0
+
+# Quantization
+bitsandbytes==0.44.1
+
+# Flash Attention (requires CUDA 12.1+, may take 10-15 min to build)
+flash-attn==2.7.0
+
+# Tokenization
+sentencepiece==0.2.0
+protobuf==5.28.3
+
+# Experiment Tracking
+mlflow==2.18.2
+
+# GCP Integration
+google-cloud-storage==2.18.2
+google-cloud-aiplatform==1.71.1
+
+# Evaluation Metrics
+rouge-score==0.1.2
+evaluate==0.4.3
+nltk==3.9.1
+scipy==1.14.1
+
+# Utilities
+tqdm==4.67.1
+numpy==1.26.4
+pandas==2.2.3
+pyyaml==6.0.2
+python-dotenv==1.0.1
