@@ -36,7 +36,9 @@ spec:
       
       containers:
         - name: vllm-server
-          image: gcr.io/YOUR_PROJECT/llmforge-vllm:latest
+          # Replace ${GCP_PROJECT_ID} with your actual GCP project ID
+          # Or use Kustomize/Helm to template this value
+          image: gcr.io/${GCP_PROJECT_ID}/llmforge-vllm:latest
           imagePullPolicy: Always
           ports:
             - name: http

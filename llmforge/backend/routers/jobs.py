@@ -25,6 +25,8 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 # Default user ID for demo purposes
+# TODO: Replace with proper authentication/authorization in production
+# This should use JWT tokens, OAuth, or API keys to identify users
 DEFAULT_USER_ID = "demo-user"
 
 
