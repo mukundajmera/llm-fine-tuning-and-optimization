@@ -36,8 +36,14 @@ spec:
       
       containers:
         - name: vllm-server
-          # Replace ${GCP_PROJECT_ID} with your actual GCP project ID
-          # Or use Kustomize/Helm to template this value
+          # NOTE: `${GCP_PROJECT_ID}` is a template placeholder. Kubernetes will NOT replace it automatically.
+          # Before deploying, either:
+          #   1) Manually replace `${GCP_PROJECT_ID}` with your GCP project ID in this file, e.g.:
+          #        image: gcr.io/my-project-id/llmforge-vllm:latest
+          #   2) Or use a templating step such as:
+          #        export GCP_PROJECT_ID=my-project-id
+          #        envsubst < deployment.yaml | kubectl apply -f -
+          #      For more complex setups, you can also template this value using Kustomize or Helm.
           image: gcr.io/${GCP_PROJECT_ID}/llmforge-vllm:latest
           imagePullPolicy: Always
           ports:

@@ -18,7 +18,7 @@ async function getJobs(): Promise<Job[]> {
       job_name: "llama-8b-customer-support",
       base_model: "meta-llama/Llama-3.1-8B",
       status: "completed",
-      created_at: "2024-12-29T10:00:00Z",
+      created_at: "2025-12-28T10:00:00Z",
       total_cost: 45.50,
     },
     {
@@ -26,7 +26,7 @@ async function getJobs(): Promise<Job[]> {
       job_name: "mistral-7b-code-assistant",
       base_model: "mistralai/Mistral-7B-v0.3",
       status: "running",
-      created_at: "2024-12-29T08:00:00Z",
+      created_at: "2025-12-29T08:00:00Z",
     },
   ];
 }

@@ -16,7 +16,6 @@ Example:
 import os
 import logging
 import argparse
-from pathlib import Path
 
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer

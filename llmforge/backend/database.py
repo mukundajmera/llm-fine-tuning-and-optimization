@@ -4,15 +4,11 @@ SQLAlchemy setup and models.
 """
 
 import os
-from datetime import datetime
-from decimal import Decimal
-from typing import Optional
 from uuid import uuid4
 
 from sqlalchemy import (
     create_engine,
     Column,
-    String,
     Integer,
     DateTime,
     Numeric,
@@ -25,7 +21,6 @@ from sqlalchemy.orm import (
     sessionmaker,
     declarative_base,
     relationship,
-    Session,
 )
 from sqlalchemy.sql import func
 

@@ -9,7 +9,7 @@ Sources:
 - [4] TRL SFTTrainer: https://huggingface.co/docs/trl
 """
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Optional
 
 

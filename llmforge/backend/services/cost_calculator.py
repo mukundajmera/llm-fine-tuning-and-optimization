@@ -5,8 +5,6 @@ Calculate training and inference costs.
 GPU pricing based on GCP pricing (as of Dec 2025).
 """
 
-from typing import Optional
-
 # GCP GPU pricing ($/hour)
 GPU_PRICING = {
     "A100-40GB": 3.67,

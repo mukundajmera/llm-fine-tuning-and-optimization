@@ -3,7 +3,6 @@ LLMForge Backend - Inference Router
 Proxy to vLLM inference server.
 """
 
-import os
 import time
 import logging
 from uuid import UUID

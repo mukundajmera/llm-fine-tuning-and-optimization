@@ -7,10 +7,10 @@ import os
 import logging
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from database import init_db, get_db
+from database import init_db
 from routers import jobs, deployments, inference
 from models import HealthResponse
 
@@ -83,9 +83,10 @@ async def health():
     """Health check endpoint."""
     # Check database
     try:
+        from sqlalchemy import text
         from database import SessionLocal
         db = SessionLocal()
-        db.execute("SELECT 1")
+        db.execute(text("SELECT 1"))
         db.close()
         db_status = "healthy"
     except Exception:
